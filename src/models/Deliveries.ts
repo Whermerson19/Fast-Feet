@@ -21,7 +21,7 @@ export default class Deliveries {
     eager: true
   })
   @JoinColumn({name: 'client_id'})
-  client: User
+  client: User;
 
   @Column()
   product: string;

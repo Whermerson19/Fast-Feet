@@ -11,7 +11,7 @@ interface IRequest {
   end_date: Date;
   order_id: string;
   deliveryman_id: string;
-  signature_id: string;
+  signature_id?: string;
 }
 
 export default class FizalizeOrderService {
@@ -42,10 +42,13 @@ export default class FizalizeOrderService {
     if (order.end_date) throw new AppError("This order is already completed");
     if (order.canceled_at) throw new AppError("This order has been alceled");
 
-    const file = await storageProvider.saveFile(signature_id);
+    if(signature_id){
+      const file = await storageProvider.saveFile(signature_id);
+      order.signature_id = file;
+      
+    }
 
     order.end_date = end_date;
-    order.signature_id = file;
 
     await deliveiresRepository.save(order);
 

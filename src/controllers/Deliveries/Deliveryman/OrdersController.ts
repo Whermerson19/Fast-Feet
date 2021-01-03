@@ -33,13 +33,11 @@ export default class OrdersController {
     const { order_id } = request.params;
     const deliveryman_id = request.user.id;
 
-    const signature_id = request.file.filename;
 
     const order = await finalizaOrder.init({
       end_date,
       order_id,
       deliveryman_id,
-      signature_id,
     });
 
     return response.status(200).json(order);
