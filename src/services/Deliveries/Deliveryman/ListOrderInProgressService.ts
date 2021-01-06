@@ -7,10 +7,11 @@ import AppError from "../../../utils/AppError";
 
 interface IRequest {
   deliveryman_id: string;
+  filterNeighborhood?: string;
 }
 
 export default class ListOrderInProgressService {
-  public async init({ deliveryman_id }: IRequest): Promise<Deliveries[]> {
+  public async init({ deliveryman_id, filterNeighborhood }: IRequest): Promise<Deliveries[]> {
     const deliveriesRepository = getRepository(Deliveries);
     const usersRepository = new UsersRepository();
 
@@ -18,13 +19,26 @@ export default class ListOrderInProgressService {
     if (!user) throw new AppError("Ivalid user");
     
 
+    if (filterNeighborhood) {
+      const list_orders = await deliveriesRepository.find({
+        where: {
+          deliveryman_id,
+          neighborhood: filterNeighborhood,
+        },
+      });
+
+    const ordersFilter = list_orders.filter((curr) => curr.end_date);
+
+    return ordersFilter;
+    }
+
     const list_orders = await deliveriesRepository.find({
       where: {
         deliveryman_id,
       },
     });
 
-    const ordersFilter = list_orders.filter(curr => !curr.canceled_at && !curr.end_date)
+    const ordersFilter = list_orders.filter((curr) => curr.end_date);
 
     return ordersFilter;
   }
