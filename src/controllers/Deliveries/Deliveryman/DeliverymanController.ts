@@ -12,11 +12,11 @@ export default class DeliverymanController {
     const listOrderInProgress = new ListOrderInProgressService();
 
     const deliveryman_id = request.user.id;
-    const filterNeighborhood  = request.query.filterNeighborhood;
+    const filterNeighborhood = request.query.filterNeighborhood;
 
     const orders = await listOrderInProgress.init({
       deliveryman_id,
-      filterNeighborhood: String(filterNeighborhood)
+      filterNeighborhood: filterNeighborhood ? String(filterNeighborhood) : ''
     });
 
     return response.status(200).json(classToClass(orders));
@@ -29,11 +29,11 @@ export default class DeliverymanController {
     const listCompletedOrders = new ListCompletedOrdersService();
 
     const deliveryman_id = request.user.id;
-    const filterNeighborhood  = request.query.filterNeighborhood;
+    const filterNeighborhood = request.query.filterNeighborhood;
 
     const orders = await listCompletedOrders.init({
       deliveryman_id,
-      filterNeighborhood: String(filterNeighborhood)
+      filterNeighborhood: filterNeighborhood ? String(filterNeighborhood) : ''
     });
 
     return response.status(200).json(classToClass(orders));

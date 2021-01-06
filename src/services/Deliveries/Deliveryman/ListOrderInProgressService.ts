@@ -27,7 +27,7 @@ export default class ListOrderInProgressService {
         },
       });
 
-    const ordersFilter = list_orders.filter((curr) => curr.end_date);
+    const ordersFilter = list_orders.filter((curr) => !curr.end_date && !curr.canceled_at);
 
     return ordersFilter;
     }
@@ -38,7 +38,7 @@ export default class ListOrderInProgressService {
       },
     });
 
-    const ordersFilter = list_orders.filter((curr) => curr.end_date);
+    const ordersFilter = list_orders.filter((curr) => !curr.end_date && !curr.canceled_at);
 
     return ordersFilter;
   }

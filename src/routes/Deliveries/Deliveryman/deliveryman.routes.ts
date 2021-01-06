@@ -12,13 +12,13 @@ const deliverymanController = new DeliverymanController();
 const orderController = new OrdersController();
 
 deliverymanRouter.get(
-  "/in-progress",
+  "/in-progress/",
   auth.deleverymanAuthorization,
   deliverymanController.indexOrderInProgress
 );
 
 deliverymanRouter.get(
-  "/completed",
+  "/completed/",
   auth.deleverymanAuthorization,
   deliverymanController.indexCompletedOrders
 );
